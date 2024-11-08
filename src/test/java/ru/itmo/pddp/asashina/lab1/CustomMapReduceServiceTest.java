@@ -18,7 +18,7 @@ class CustomMapReduceServiceTest {
     void processFileTest(int mapThreads, int reduceThreads) {
         service.setMapWorkerNumber(mapThreads);
         service.setReduceWorkerNumber(reduceThreads);
-        System.out.println("Размер узлов на Map " + mapThreads + " и Reduce " + reduceThreads + " компонентах");
+        System.out.println("Размер узлов на Map: " + mapThreads + " и Reduce: " + reduceThreads);
         System.out.println("Размер файла: " + file.length() / 1024 + " Кб");
 
         var now = System.currentTimeMillis();
