@@ -1,0 +1,39 @@
+version: "3"
+services:
+  namenode:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    volumes:
+      - namenode:/hadoop/dfs/name
+    command: /etc/bootstrap.sh -d -bash
+    ports:
+      - 50070:50070
+    environment:
+      - CLUSTER_NAME=test
+
+  datanode1:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    volumes:
+      - datanode1:/hadoop/dfs/data
+    command: /usr/local/hadoop/bin/hdfs dfsadmin -namenode namenode
+    ports:
+      - 50075:50075
+    depends_on:
+      - namenode
+
+  datanode2:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    volumes:
+      - datanode2:/hadoop/dfs/data
+    command: /usr/local/hadoop/bin/hdfs dfsadmin -namenode namenode
+    ports:
+      - 50076:50075
+    depends_on:
+      - namenode
+
+volumes:
+  datanode1:
+  datanode2:
+  namenode:

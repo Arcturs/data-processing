@@ -16,9 +16,22 @@
         <lombok.version>1.18.34</lombok.version>
         <junit-jupiter-api.version>5.11.3</junit-jupiter-api.version>
         <annotations.version>24.0.0</annotations.version>
+        <hadoop-common.version>3.4.1</hadoop-common.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-mapreduce-client-core</artifactId>
+            <version>${hadoop-common.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
