@@ -16,6 +16,7 @@ public class HadoopWordCountService {
             throws IOException, InterruptedException, ClassNotFoundException {
 
         var conf = new Configuration();
+        conf.set("fs.defaultFS", "hdfs://localhost:9000");
         var job = Job.getInstance(conf, "word-count");
         job.setJarByClass(HadoopWordCountService.class);
         job.setMapperClass(CustomMapper.class);
@@ -25,7 +26,7 @@ public class HadoopWordCountService {
         job.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(job, new Path(inFilePath));
         FileOutputFormat.setOutputPath(job, new Path(outFilePath));
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        job.waitForCompletion(true);
     }
 
 }

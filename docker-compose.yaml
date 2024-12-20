@@ -3,37 +3,100 @@ services:
   namenode:
     platform: linux/amd64
     image: apache/hadoop:3.4.1
-    volumes:
-      - namenode:/hadoop/dfs/name
-    command: /etc/bootstrap.sh -d -bash
+    command: [ "hdfs", "namenode" ]
+    container_name: namenode
     ports:
-      - 50070:50070
+      - 9870:9870
+      - 9000:9000
+    volumes:
+      - ./hadoop/dfs/name:/hadoop/dfs/name
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
+      - "/tmp/data/out:/data/out"
+    env_file:
+      - hadoop.env
+
+  datanode1:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    command: [ "hdfs", "datanode" ]
+    container_name: datanode1
+    hostname: datanode1
+    ports:
+      - 9866:9866
+      - 9864:9864
+    depends_on:
+      - namenode
+    volumes:
+      - ./hadoop/dfs/data1:/hadoop/dfs/data
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
+      - "/tmp/data/out:/data/out"
     environment:
-      - CLUSTER_NAME=test
-
-  datanode1:
-    platform: linux/amd64
-    image: apache/hadoop:3.4.1
-    volumes:
-      - datanode1:/hadoop/dfs/data
-    command: /usr/local/hadoop/bin/hdfs dfsadmin -namenode namenode
-    ports:
-      - 50075:50075
-    depends_on:
-      - namenode
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - hadoop.env
 
   datanode2:
     platform: linux/amd64
     image: apache/hadoop:3.4.1
-    volumes:
-      - datanode2:/hadoop/dfs/data
-    command: /usr/local/hadoop/bin/hdfs dfsadmin -namenode namenode
+    command: [ "hdfs", "datanode" ]
+    container_name: datanode2
+    hostname: datanode2
     ports:
-      - 50076:50075
+      - 9867:9866
+      - 9865:9864
     depends_on:
       - namenode
+    volumes:
+      - ./hadoop/dfs/data2:/hadoop/dfs/data
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
+      - "/tmp/data/out:/data/out"
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - hadoop.env
 
-volumes:
-  datanode1:
-  datanode2:
-  namenode:
+  datanode3:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    command: [ "hdfs", "datanode" ]
+    container_name: datanode3
+    hostname: datanode3
+    ports:
+      - 9868:9866
+      - 9863:9864
+    depends_on:
+      - namenode
+    volumes:
+      - ./hadoop/dfs/data3:/hadoop/dfs/data
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
+      - "/tmp/data/out:/data/out"
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - hadoop.env
+
+  resourcemanager:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    container_name: resourcemanager
+    command: [ "yarn", "resourcemanager" ]
+    volumes:
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
+      - "/tmp/data/out:/data/out"
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 datanode1:9866 datanode2:9866 datanode3:9866"
+    env_file:
+      - hadoop.env
+
+  nodemanager:
+    platform: linux/amd64
+    image: apache/hadoop:3.4.1
+    command: [ "yarn", "nodemanager" ]
+    container_name: nodemanager
+    volumes:
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
+      - "/tmp/data/out:/data/out"
+    environment:
+      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 datanode1:9866 datanode2:9866 datanode3:9866 resourcemanager:8088"
+    env_file:
+      - hadoop.env

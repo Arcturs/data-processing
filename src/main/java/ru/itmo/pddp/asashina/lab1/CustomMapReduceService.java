@@ -22,10 +22,10 @@ public class CustomMapReduceService {
 
     private static final int BYTE_BUFFER_SIZE_KB = 10 * 1024;
 
-    @Setter(onMethod_ = { @TestOnly})
+    @Setter
     private int mapWorkerNumber;
 
-    @Setter(onMethod_ = { @TestOnly })
+    @Setter
     private int reduceWorkerNumber;
 
     private final MapComponent mapComponent;
@@ -53,6 +53,8 @@ public class CustomMapReduceService {
                 byteBuffer.clear();
             }
         } catch (IOException e) {
+            mapService.shutdownNow();
+            reduceService.shutdownNow();
             throw new UncheckedIOException(e);
         }
 
