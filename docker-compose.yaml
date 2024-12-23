@@ -11,7 +11,9 @@ services:
     volumes:
       - ./hadoop/dfs/name:/hadoop/dfs/name
       - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
-      - "/tmp/data/out:/data/out"
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/web-Google.txt:/tmp/data/web-Google.txt"
+      - "/tmp/data/out/word/count:/data/out/word/count"
+      - "/tmp/data/out/web/graph:/data/out/web/graph"
     env_file:
       - hadoop.env
 
@@ -29,7 +31,9 @@ services:
     volumes:
       - ./hadoop/dfs/data1:/hadoop/dfs/data
       - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
-      - "/tmp/data/out:/data/out"
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/web-Google.txt:/tmp/data/web-Google.txt"
+      - "/tmp/data/out/word/count:/data/out/word/count"
+      - "/tmp/data/out/web/graph:/data/out/web/graph"
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
@@ -49,7 +53,9 @@ services:
     volumes:
       - ./hadoop/dfs/data2:/hadoop/dfs/data
       - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
-      - "/tmp/data/out:/data/out"
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/web-Google.txt:/tmp/data/web-Google.txt"
+      - "/tmp/data/out/word/count:/data/out/word/count"
+      - "/tmp/data/out/web/graph:/data/out/web/graph"
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
@@ -69,7 +75,9 @@ services:
     volumes:
       - ./hadoop/dfs/data3:/hadoop/dfs/data
       - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
-      - "/tmp/data/out:/data/out"
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/web-Google.txt:/tmp/data/web-Google.txt"
+      - "/tmp/data/out/word/count:/data/out/word/count"
+      - "/tmp/data/out/web/graph:/data/out/web/graph"
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
@@ -82,7 +90,9 @@ services:
     command: [ "yarn", "resourcemanager" ]
     volumes:
       - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
-      - "/tmp/data/out:/data/out"
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/web-Google.txt:/tmp/data/web-Google.txt"
+      - "/tmp/data/out/word/count:/data/out/word/count"
+      - "/tmp/data/out/web/graph:/data/out/web/graph"
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 datanode1:9866 datanode2:9866 datanode3:9866"
     env_file:
@@ -95,8 +105,66 @@ services:
     container_name: nodemanager
     volumes:
       - "/Users/a.sashina/IdeaProjects/data-processing/data/big.txt:/tmp/data/big.txt"
-      - "/tmp/data/out:/data/out"
+      - "/Users/a.sashina/IdeaProjects/data-processing/data/web-Google.txt:/tmp/data/web-Google.txt"
+      - "/tmp/data/out/word/count:/data/out/word/count"
+      - "/tmp/data/out/web/graph:/data/out/web/graph"
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 datanode1:9866 datanode2:9866 datanode3:9866 resourcemanager:8088"
     env_file:
       - hadoop.env
+
+  spark-master:
+    image: bitnami/spark:3.2.4
+    environment:
+      JDK_JAVA_OPTIONS: --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+      SPARK_MODE: master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    volumes:
+      - "./spark-logs:/spark/logs"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
+      - "/tmp/spark:/tmp/spark"
+
+  spark-worker-1:
+    image: bitnami/spark:3.2.4
+    depends_on:
+      - spark-master
+    environment:
+      JDK_JAVA_OPTIONS: --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+      SPARK_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+    volumes:
+      - "./spark-logs:/spark/logs"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
+      - "/tmp/spark:/tmp/spark"
+
+  spark-worker-2:
+    image: bitnami/spark:3.2.4
+    depends_on:
+      - spark-master
+    environment:
+      JDK_JAVA_OPTIONS: --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+      SPARK_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+    volumes:
+      - "./spark-logs:/spark/logs"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
+      - "/tmp/spark:/tmp/spark"
+
+  spark-worker-3:
+    image: bitnami/spark:3.2.4
+    depends_on:
+      - spark-master
+    environment:
+      JDK_JAVA_OPTIONS: --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+      SPARK_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+    volumes:
+      - "./spark-logs:/spark/logs"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
+      - "/tmp/spark:/tmp/spark"

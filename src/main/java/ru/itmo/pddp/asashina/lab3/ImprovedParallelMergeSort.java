@@ -7,7 +7,7 @@ import static ru.itmo.pddp.asashina.lab3.MergeSort.mergesort;
 
 public class ImprovedParallelMergeSort extends RecursiveAction {
 
-    private static final int ELEMENTS_SIZE_LIMIT = 1 << 10;
+    private static final int ELEMENTS_SIZE_LIMIT = 1 << 8;
 
     private final int[] array;
     private final int[] helperArray;

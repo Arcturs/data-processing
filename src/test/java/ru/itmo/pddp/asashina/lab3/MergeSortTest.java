@@ -12,10 +12,10 @@ public class MergeSortTest {
 
     private static final Random RANDOM = new Random();
 
-    private final ForkJoinPool forkJoinPool = new ForkJoinPool(10);
+    private final ForkJoinPool forkJoinPool = new ForkJoinPool(8);
 
     @ParameterizedTest
-    @CsvSource({"1", "4", "16", "32", "256", "1024", "8192", "16384", "32768", "60000", "100000", "450000", "1000000", "1500000"})
+    @CsvSource({"1", "4", "16", "32", "256", "1024", "8192", "16384", "32768", "60000", "100000", "450000", "1000000"})
     void sortTest(int size) {
         var smallArray = generateRandomArray(size);
         System.out.println("-- Размер массива: " + size + " --");

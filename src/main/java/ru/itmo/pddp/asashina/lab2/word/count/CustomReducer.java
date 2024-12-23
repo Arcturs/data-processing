@@ -1,4 +1,4 @@
-package ru.itmo.pddp.asashina.lab2;
+package ru.itmo.pddp.asashina.lab2.word.count;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class CustomReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-    private IntWritable result = new IntWritable();
+    private final IntWritable result = new IntWritable();
 
     @Override
     protected void reduce(
