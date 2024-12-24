@@ -32,9 +32,9 @@ public class ImprovedParallelMergeSort extends RecursiveAction {
             return;
         }
 
-        var middle = (left + right) / 2;
-        var left = new ImprovedParallelMergeSort(array, this.left, middle);
-        var right = new ImprovedParallelMergeSort(array, middle + 1, this.right);
+        int middle = (left + right) / 2;
+        ImprovedParallelMergeSort left = new ImprovedParallelMergeSort(array, this.left, middle);
+        ImprovedParallelMergeSort right = new ImprovedParallelMergeSort(array, middle + 1, this.right);
         invokeAll(left, right);
         merge(array, helperArray, this.left, middle, this.right);
     }

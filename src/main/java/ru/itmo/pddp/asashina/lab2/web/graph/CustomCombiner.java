@@ -16,7 +16,7 @@ public class CustomCombiner extends Reducer<Text, Text, Text, Text> {
             Text key, Iterable<Text> values,
             Reducer<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException {
 
-        var parents = StreamSupport.stream(values.spliterator(), false)
+        String parents = StreamSupport.stream(values.spliterator(), false)
                 .map(Text::toString)
                 .collect(Collectors.joining(","));
         result.set(parents);

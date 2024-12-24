@@ -23,7 +23,7 @@ public class ParallelMergeSort extends RecursiveAction {
         if (left >= right) {
             return;
         }
-        var middle = (left + right) / 2;
+        int middle = (left + right) / 2;
         ParallelMergeSort left = new ParallelMergeSort(array, this.left, middle);
         ParallelMergeSort right = new ParallelMergeSort(array, middle + 1, this.right);
         invokeAll(left, right);

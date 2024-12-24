@@ -21,9 +21,9 @@ class CustomMapReduceServiceTest {
         System.out.println("Размер узлов на Map: " + mapThreads + " и Reduce: " + reduceThreads);
         System.out.println("Размер файла: " + file.length() / 1024 + " Кб");
 
-        var now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         service.processFile(file.getAbsolutePath());
-        var processTime = System.currentTimeMillis() - now;
+        long processTime = System.currentTimeMillis() - now;
 
         System.out.println("Время обработки файла: " + processTime + " мс");
     }

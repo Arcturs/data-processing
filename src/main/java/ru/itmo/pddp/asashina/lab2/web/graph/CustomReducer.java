@@ -14,8 +14,8 @@ public class CustomReducer extends Reducer<Text, Text, Text, Text> {
             Text key, Iterable<Text> values,
             Reducer<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException {
 
-        var count = 0;
-        for (var value : values) {
+        int count = 0;
+        for (Text value : values) {
             count += value.toString().split(",").length;
         }
         result.set(String.valueOf(count));

@@ -15,7 +15,7 @@ public class CustomReducer extends Reducer<Text, IntWritable, Text, IntWritable>
             Text key, Iterable<IntWritable> values,
             Reducer<Text, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
 
-        var sum = 0;
+        int sum = 0;
         for (IntWritable val : values) {
             sum += val.get();
         }

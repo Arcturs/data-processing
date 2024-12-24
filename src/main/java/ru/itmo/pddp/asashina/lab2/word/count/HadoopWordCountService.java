@@ -12,20 +12,19 @@ import java.io.IOException;
 
 public class HadoopWordCountService {
 
-    public void count(String inFilePath, String outFilePath)
+    public static void count(String input, String output)
             throws IOException, InterruptedException, ClassNotFoundException {
 
-        var conf = new Configuration();
-        //conf.set("fs.defaultFS", "hdfs://localhost:9000");
-        var job = Job.getInstance(conf, "word-count");
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf, "word-count");
         job.setJarByClass(HadoopWordCountService.class);
         job.setMapperClass(CustomMapper.class);
         job.setCombinerClass(CustomReducer.class);
         job.setReducerClass(CustomReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path(inFilePath));
-        FileOutputFormat.setOutputPath(job, new Path(outFilePath));
+        FileInputFormat.addInputPath(job, new Path(input));
+        FileOutputFormat.setOutputPath(job, new Path(output));
         job.waitForCompletion(true);
     }
 

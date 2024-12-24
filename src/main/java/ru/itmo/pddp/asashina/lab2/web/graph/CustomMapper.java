@@ -14,9 +14,9 @@ public class CustomMapper extends Mapper<Object, Text, Text, Text> {
     protected void map(Object key, Text value, Mapper<Object, Text, Text, Text>.Context context)
             throws IOException, InterruptedException {
 
-        var input = value.toString().split("\n");
-        for (var in : input) {
-            var parts = in.split("\t");
+        String[] input = value.toString().split("\n");
+        for (String in : input) {
+            String[] parts = in.split("\t");
             this.key.set(parts[1]);
             this.value.set(parts[0]);
             context.write(this.key, this.value);

@@ -16,11 +16,11 @@ public class CustomMapper extends Mapper<Object, Text, Text, IntWritable> {
     protected void map(Object key, Text value, Mapper<Object, Text, Text, IntWritable>.Context context)
             throws IOException, InterruptedException {
 
-        var input = value.toString()
+        String[] input = value.toString()
                 .trim()
                 .toLowerCase()
                 .split("\\W+");
-        for (var in : input) {
+        for (String in : input) {
             word.set(in);
             context.write(word, ONE);
         }

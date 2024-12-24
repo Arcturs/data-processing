@@ -11,12 +11,11 @@ import java.io.IOException;
 
 public class HadoopWebGraphService {
 
-    public void count(String inFilePath, String outFilePath)
+    public static void count(String inFilePath, String outFilePath)
             throws IOException, InterruptedException, ClassNotFoundException {
 
-        var conf = new Configuration();
-        //conf.set("fs.defaultFS", "hdfs://localhost:9000");
-        var job = Job.getInstance(conf, "web-graph");
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf, "web-graph");
         job.setJarByClass(HadoopWebGraphService.class);
         job.setMapperClass(CustomMapper.class);
         job.setCombinerClass(CustomCombiner.class);

@@ -17,18 +17,18 @@ public class MergeSortTest {
     @ParameterizedTest
     @CsvSource({"1", "4", "16", "32", "256", "1024", "8192", "16384", "32768", "60000", "100000", "450000", "1000000"})
     void sortTest(int size) {
-        var smallArray = generateRandomArray(size);
+        int[] smallArray = generateRandomArray(size);
         System.out.println("-- Размер массива: " + size + " --");
 
-        var smallArraySequential = new int[smallArray.length];
+        int[] smallArraySequential = new int[smallArray.length];
         System.arraycopy(smallArray, 0, smallArraySequential, 0, smallArray.length);
-        var now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         mergesort(smallArraySequential);
-        var time = System.currentTimeMillis() - now;
+        long time = System.currentTimeMillis() - now;
         System.out.println(" - Сортировка слиянием в 1 потоке - ");
         System.out.println("   Время сортировки: " + time + " мс");
 
-        var smallArrayParallel = new int[smallArray.length];
+        int[] smallArrayParallel = new int[smallArray.length];
         System.arraycopy(smallArray, 0, smallArrayParallel, 0, smallArray.length);
         now = System.currentTimeMillis();
         forkJoinPool.invoke(new ParallelMergeSort(smallArrayParallel, 0, smallArray.length - 1));
@@ -36,7 +36,7 @@ public class MergeSortTest {
         System.out.println(" - Сортировка слиянием параллельно - ");
         System.out.println("   Время сортировки: " + time + " мс");
 
-        var smallArrayImprovedParallel = new int[smallArray.length];
+        int[] smallArrayImprovedParallel = new int[smallArray.length];
         System.arraycopy(smallArray, 0, smallArrayImprovedParallel, 0, smallArray.length);
         now = System.currentTimeMillis();
         forkJoinPool.invoke(
@@ -47,8 +47,8 @@ public class MergeSortTest {
     }
 
     private static int[] generateRandomArray(int size) {
-        var array = new int[size];
-        for (var i = 0; i < size; i++) {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
             array[i] = RANDOM.nextInt(1_000_000);
         }
         return array;
