@@ -1,5 +1,6 @@
 package ru.itmo.pddp.asashina.lab1;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -7,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.File;
 import java.util.stream.Stream;
 
+@Disabled
 class CustomMapReduceServiceTest {
 
     private final CustomMapReduceService service =

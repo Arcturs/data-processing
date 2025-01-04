@@ -1,4 +1,4 @@
-package ru.itmo.pddp.asashina;
+package ru.itmo.pddp.asashina.lab2;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

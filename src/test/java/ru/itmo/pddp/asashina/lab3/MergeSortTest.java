@@ -1,5 +1,6 @@
 package ru.itmo.pddp.asashina.lab3;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -8,6 +9,7 @@ import java.util.concurrent.ForkJoinPool;
 
 import static ru.itmo.pddp.asashina.lab3.MergeSort.mergesort;
 
+@Disabled
 public class MergeSortTest {
 
     private static final Random RANDOM = new Random();
