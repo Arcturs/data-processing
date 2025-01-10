@@ -75,8 +75,8 @@ services:
       - "7077:7077"
     volumes:
       - "./spark-logs:/spark/logs"
-      - "./data/Books_rating.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/Books_rating.csv"
-      - "./data/books_data.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/books_data.csv"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
 
   spark-worker-1:
     image: bitnami/spark:3.2.4
@@ -88,8 +88,8 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     volumes:
       - "./spark-logs:/spark/logs"
-      - "./data/Books_rating.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/Books_rating.csv"
-      - "./data/books_data.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/books_data.csv"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
 
   spark-worker-2:
     image: bitnami/spark:3.2.4
@@ -101,8 +101,8 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     volumes:
       - "./spark-logs:/spark/logs"
-      - "./data/Books_rating.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/Books_rating.csv"
-      - "./data/books_data.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/books_data.csv"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"
 
   spark-worker-3:
     image: bitnami/spark:3.2.4
@@ -114,5 +114,5 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     volumes:
       - "./spark-logs:/spark/logs"
-      - "./data/Books_rating.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/Books_rating.csv"
-      - "./data/books_data.csv:/Users/anastasiasasina/IdeaProjects/data-processing/data/books_data.csv"
+      - "./data/Books_rating.csv:/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv"
+      - "./data/books_data.csv:/Users/a.sashina/IdeaProjects/data-processing/data/books_data.csv"

@@ -1,6 +1,5 @@
 package ru.itmo.pddp.asashina.lab1;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.io.File;
@@ -19,7 +18,6 @@ import java.util.concurrent.Executors;
 
 import static java.nio.file.StandardOpenOption.READ;
 
-@RequiredArgsConstructor
 public class CustomMapReduceService {
 
     private static final int BYTE_BUFFER_SIZE_KB = 10 * 1024;
@@ -32,6 +30,11 @@ public class CustomMapReduceService {
 
     private final MapComponent mapComponent;
     private final ReduceComponent reduceComponent;
+
+    public CustomMapReduceService(MapComponent mapComponent, ReduceComponent reduceComponent) {
+        this.mapComponent = mapComponent;
+        this.reduceComponent = reduceComponent;
+    }
 
     public void processFile(String filePath) {
         ExecutorService mapService = Executors.newFixedThreadPool(mapWorkerNumber);

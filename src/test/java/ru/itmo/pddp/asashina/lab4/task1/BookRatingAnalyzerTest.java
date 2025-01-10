@@ -12,7 +12,7 @@ class BookRatingAnalyzerTest {
 
     @Test
     void analyzeTest() {
-        File testFile = new File("/Users/anastasiasasina/IdeaProjects/data-processing/data/Books_rating.csv");
+        File testFile = new File("/Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv");
         System.out.println("--- Задание №1 Аналитика данных ---");
         System.out.println("Размер оригинального файла: " + testFile.length() / 1024 + " Кб");
 
@@ -22,7 +22,7 @@ class BookRatingAnalyzerTest {
         System.out.println("Время анализа файла: " + time + " мс");
 
         System.out.println("Количество книг с рейтингом более 4.0: " + result.count());
-        System.out.println("Подробный вывод: " + result);
+        System.out.println("Подробный вывод: " + result.showString(90, 0, true));
     }
 
 }

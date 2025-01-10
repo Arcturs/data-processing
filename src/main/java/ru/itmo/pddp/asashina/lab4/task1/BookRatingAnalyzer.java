@@ -19,17 +19,17 @@ public class BookRatingAnalyzer {
                                 DataTypes.createStructField("User_id", DataTypes.StringType, true),
                                 DataTypes.createStructField("profileName", DataTypes.StringType, true),
                                 DataTypes.createStructField("review/helpfulness", DataTypes.StringType, true),
-                                DataTypes.createStructField("review/score", DataTypes.DoubleType, true),
+                                DataTypes.createStructField("review_score", DataTypes.DoubleType, true),
                                 DataTypes.createStructField("review/time", DataTypes.StringType, true),
                                 DataTypes.createStructField("review/summary", DataTypes.StringType, true),
                                 DataTypes.createStructField("review/text", DataTypes.StringType, true)
                         }))
-                .csv("file:///Users/anastasiasasina/IdeaProjects/data-processing/data/Books_rating.csv")
-                .select("Title", "review/score")
+                .csv("file:///Users/a.sashina/IdeaProjects/data-processing/data/Books_rating.csv")
+                .select("Title", "review_score")
                 .groupBy("Title")
-                .mean("review/score")
-                .filter("review/score>=4.0")
-                .select("Title", "review/score");
+                .mean("review_score")
+                .filter("avg(review_score)>=4.0")
+                .select("Title", "avg(review_score)");
     }
 
 }

@@ -8,7 +8,7 @@ public class SparkConfig {
 
     private static final SparkSession INSTANCE = SparkSession.builder()
             .appName("SparkTestApp")
-            .config("spark.jars", "target/data-processing-1.0-SNAPSHOT.jar")
+            .config("spark.jars", "build/libs/data-processing-1.0-SNAPSHOT.jar")
             .master("spark://localhost:7077")
             .getOrCreate();
 
